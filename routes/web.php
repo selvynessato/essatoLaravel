@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\MunicipioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +35,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/departamento', [DepartamentoController::class, 'depto'])->name('depto');
+Route::get('/municipio', [MunicipioController::class, 'muni'])->name('muni');

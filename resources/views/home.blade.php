@@ -15,6 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <img src="../public/images/chica.jpeg" class="img-fluid" alt="">
                 </div>
             </div>
         </div>
