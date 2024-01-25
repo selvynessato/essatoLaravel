@@ -29,4 +29,17 @@ class DepartamentoController extends Controller
         $datos = Departamento::all();
         return view('Departamento')->with("datos",$datos);
     }
+    
+    public function create(Request $request) {
+        //return $request->departamento;
+        $sql =DB::insert(" insert into departamento(id_departamento, nombre_departamento)value(?,?)",[
+            $request->codigo,
+            $request->departamento
+        ]);
+        if ($sql == true) {
+            return back()->with("mensaje", "correcto");
+        } else {
+            return back()->with("mensaje", "incorrecto");
+        }
+    }
 }

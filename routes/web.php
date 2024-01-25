@@ -38,3 +38,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/departamento', [DepartamentoController::class, 'depto'])->name('depto');
 Route::get('/municipio', [MunicipioController::class, 'muni'])->name('muni');
+Route::post('/nuevo_registro', [DepartamentoController::class, 'create'])->name('create');
