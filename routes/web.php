@@ -37,5 +37,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/departamento', [DepartamentoController::class, 'depto'])->name('depto');
+Route::post('/nuevo_departamento', [DepartamentoController::class, 'create'])->name('create');
+Route::post('/editar_departamento', [DepartamentoController::class, 'edit'])->name('edit');
+Route::post('/eliminar_departamento', [DepartamentoController::class, 'delete'])->name('delete');
 Route::get('/municipio', [MunicipioController::class, 'muni'])->name('muni');
-Route::post('/nuevo_registro', [DepartamentoController::class, 'create'])->name('create');
