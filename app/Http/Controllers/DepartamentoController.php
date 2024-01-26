@@ -50,8 +50,6 @@ class DepartamentoController extends Controller
             ]);
             return back()->with("mensaje", "correcto");
         } catch (\Exception $e) {
-            // imprime el mensaje de error para depuración
-            // echo $e->getMessage();       
             return back()->with("mensaje", "incorrecto");
         }
     }
@@ -71,22 +69,20 @@ class DepartamentoController extends Controller
                 return back()->with("mensaje", "incorrecto");
             }
         } catch (\Throwable $th) {
-            // Manejar la excepción, puedes imprimir el mensaje de error para depuración
-            // echo $th->getMessage();
             return back()->with("mensaje", "incorrecto");
         }
     }
 
     public function delete($id) {
-        try{
-            $sql =DB::delete(" delete from departamento where id_departamento=$id");
+        try {
+            $sql = DB::table('departamento')->where('id_departamento', $id)->delete();
+    
             if ($sql) {
                 return back()->with("mensaje", "correcto");
             } else {
                 return back()->with("mensaje", "incorrecto");
             }
-        } catch(\Throwable $th){
-            $sql = 0;
+        } catch (\Throwable $th) {
             return back()->with("mensaje", "incorrecto");
         }
     }

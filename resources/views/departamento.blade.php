@@ -11,55 +11,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>   
-    <!--<h1 class="text-center p-3" style="background:#f2eff1">Departamentos</h1>-->
-    @if(session('mensaje') == 'correcto')
-        <script>
-            const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Registro guardado exitosamente..."
-            });
-        </script>
-        <style>
-           body {
-              font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
-            }       
-        </style>
-    @else
-    <script>
-            const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "error",
-                title: "Error, no se puedo guardar!!"
-            });
-        </script>
-        <style>
-           body {
-              font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
-            }       
-        </style>    
-    @endif
+    <!--<h1 class="text-center p-3" style="background:#f2eff1">Departamentos</h1> -->
+        @if(session('mensaje') == 'correcto' || session('mensaje') == 'incorrecto')
+        @php
+            $mensajeTipo = session('mensaje') == 'correcto' ? 'success' : 'error';
+            $mensajeTexto = session('mensaje') == 'correcto' ? 'Registro guardado exitosamente...' : 'Error, no se pudo guardar!!';
+        @endphp
 
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+
+                    Toast.fire({
+                        icon: "{{ $mensajeTipo }}",
+                        title: "{{ $mensajeTexto }}"
+                    });
+                });
+            </script>
+        @endif
         <!-- Modal creacion-->
         <div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -111,8 +90,10 @@
                     <td>{{$item->nombre_departamento}}</td>
                     <td>
                         <a href="" data-bs-toggle="modal" data-bs-target="#modalEdicion{{$item->id_departamento}}" class="btn btn-outline-warning btn-sm"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a href="" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
-                    </td>  
+                        <a href="{{ route('delete', ['id' => $item->id_departamento]) }}" class="btn btn-outline-danger btn-sm delete-departamento" data-id="{{ $item->id_departamento }}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                        </td>  
                         <!-- Modal Edicion-->
                         <div class="modal fade" id="modalEdicion{{$item->id_departamento}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -146,9 +127,10 @@
                 @endforeach
             </tbody>
         </table>
-    </div>   
+    </div> 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@5.3.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('../resources/js/eliminar_departamento.js') }}"></script>
 </body>
 @endsection
